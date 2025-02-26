@@ -12,13 +12,53 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cpf_cnpj', 20)->unique();
+            $table->string('celular', 100)->nullable();
+            $table->integer('permissao')->default(1);
+            $table->string('imagem', 50)->nullable();
+            $table->string('observacoes', 500)->nullable();
+            $table->string('endereco', 100)->nullable();
+            $table->string('complemento', 100)->nullable();
+            $table->string('bairro', 50)->nullable();
+            $table->string('cep', 9)->nullable();
+            $table->string('cidade', 50)->nullable();
+            $table->string('uf', 2)->nullable();
+            $table->dateTime('last_login')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('telefones', function (Blueprint $table) {
+            $table->string('id')->autoIncrement();
+            $table->bigInteger('usuarios_id')->nullable();
+            $table->bigInteger('contatos_id')->nullable();
+            $table->string('telefone', 20);
+            $table->timestamps();
+        });
+
+        Schema::create('contatos', function (Blueprint $table) {
+            $table->string('id')->autoIncrement();
+            $table->bigInteger('usuarios_id');
+            $table->string('cpf_cnpj', 20);
+            $table->string('celular', 15);
+            $table->string('imagem', 50)->nullable();
+            $table->string('observacoes', 500)->nullable();
+            $table->string('endereco', 100);
+            $table->string('complemento', 100)->nullable();
+            $table->string('bairro', 50);
+            $table->string('cep', 9);
+            $table->string('cidade', 50);
+            $table->string('uf', 2);
+            $table->string('telefone', 20);
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->timestamps();
+            $table->unique(['cpf_cnpj', 'usuarios_id']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -43,6 +83,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('telefones');
+        Schema::dropIfExists('contatos');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

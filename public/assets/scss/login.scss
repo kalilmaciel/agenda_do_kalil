@@ -1,0 +1,46 @@
+@import "variables";
+
+body {
+	background-image: url("/assets/img/back-login.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden !important;
+}
+#login_page {
+	width: 400px;
+	max-width: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+    height: 100vh;
+
+    .olho {
+		position: absolute;
+		right: 20px;
+		top: 15px;
+	}
+
+	.card-panel {
+		height: 100%;
+		width: 100%;
+		max-width: 500px;
+		margin: 0 0 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-right: 20px;
+	}
+
+	h1 {
+		color: $primaria;
+	}
+	.responsive-img {
+		max-height: 150px;
+	}
+	.btn {
+		background-color: $primaria;
+	}
+    .btn-flat{
+        color: $primaria;
+    }
+}

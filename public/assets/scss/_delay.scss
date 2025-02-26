@@ -1,0 +1,10 @@
+//----------- DELAY -------------//
+
+$tempo: 0.2;
+
+@for $i from 1 through 100 {
+	.delay_#{$i} {
+		-webkit-animation-delay: #{$tempo * $i}s;
+		animation-delay: #{$tempo * $i}s;
+	}
+}

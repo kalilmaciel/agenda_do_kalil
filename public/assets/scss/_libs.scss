@@ -1,0 +1,26 @@
+@import url(/public/assets/fonts/material-icons.css);
+@import "./public/assets/node_modules/materialize-css/sass/materialize.scss";
+
+$fa-font-path: "../fontawesome/webfonts" !default;
+@import "./public/assets/fontawesome/scss/fontawesome.scss";
+@import "./public/assets/fontawesome/scss/duotone.scss";
+@import "./public/assets/fontawesome/scss/_duotone-icons.scss";
+@import "./public/assets/fontawesome/scss/solid.scss";
+@import "./public/assets/fontawesome/scss/regular.scss";
+@import "./public/assets/fontawesome/scss/brands.scss";
+
+@import url(/public/assets/node_modules/animate.css/animate.min.css);
+
+@import url(/public/assets/node_modules/sweetalert2/dist/sweetalert2.min.css);
+
+@import url(/public/assets/node_modules/@fancyapps/ui/dist/fancybox/fancybox.css);
+
+.default-icon-theme {
+	&.fa-brands{
+		color: #425a03;
+	}
+	--fa-primary-opacity: 1;
+	--fa-secondary-opacity: 1;
+	--fa-primary-color: rgb(255, 145, 77);
+	--fa-secondary-color: rgb(216, 85, 3);
+}
