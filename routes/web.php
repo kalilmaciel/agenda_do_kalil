@@ -1,7 +1,6 @@
 <?php
 
+use App\Http\Controllers\InicialController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [InicialController::class, 'index'])->name('inicial')->middleware('auth');
