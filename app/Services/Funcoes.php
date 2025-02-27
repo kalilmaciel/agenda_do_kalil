@@ -44,6 +44,20 @@ class Funcoes
     }
 
     /**
+     * Encripta dados
+     * @param mixed $dados
+     * @return mixed
+     */
+    public static function encrypt($dados)
+    {
+        try {
+            return Crypt::encrypt($dados);
+        } catch (DecryptException $de) {
+            return NULL;
+        }
+    }
+
+    /**
      * Converte dada do padrão d/m/Y para o padrão Y-m-d
      * @param mixed $data
      * @param bool $remover_segundos
@@ -190,17 +204,16 @@ class Funcoes
 
     /**
      *
-     * @param Request $request Request do fomulário
-     * @param string $campo Nome do campo que contem a imagem
-     * @param string $destino Pasta de destino no S3
-     * @param bool $gerarThumbnail Se deve gerar miniatura ou não
-     * @return string|false Retorna o nome da imagem enviada ou FALSE em caso se falha
+     * @param mixed $foto
+     * @param mixed $destino
+     * @param bool $gerarThumbnail
+     * @return string|void
      * @throws BindingResolutionException
      * @throws RuntimeException
      */
     public static function uploadImagem($foto, $destino, $gerarThumbnail = FALSE)
     {
-        if ($foto->isValid()) {
+        if ($foto && $foto->isValid()) {
 
             //Gerando nome único da imagem
             $imageName = time() . '.' . $foto->extension();
@@ -239,11 +252,14 @@ class Funcoes
      */
     public static function onlyNumbers($number, $qtdPad = 0, $stringPad = '0')
     {
-        $number = preg_replace("/[^0-9]/", "", $number);
-        if ($qtdPad > 0) {
-            $number = str_pad($number, $qtdPad, $stringPad, STR_PAD_LEFT);
+        if (!empty($number)) {
+            $number = preg_replace("/[^0-9]/", "", $number);
+            if ($qtdPad > 0) {
+                $number = str_pad($number, $qtdPad, $stringPad, STR_PAD_LEFT);
+            }
+            return $number;
         }
-        return $number;
+        return FALSE;
     }
 
     /**

@@ -2,4 +2,3 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/impressao.css') }}" media="print" />
 
-<link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" type="image/png">

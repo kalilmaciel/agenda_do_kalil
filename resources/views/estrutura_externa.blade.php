@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{env('APP_NAME')}}</title>
 
+    @include('estrutura.favicon')
+
     @include('estrutura.css')
+
     @yield('css_extra')
 
 </head>

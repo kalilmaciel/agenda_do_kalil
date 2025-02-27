@@ -49,4 +49,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function contatos()
+    {
+        return $this->hasMany(Contato::class);
+    }
+
+    public function telefones()
+    {
+        return $this->hasMany(Telefone::class);
+    }
 }

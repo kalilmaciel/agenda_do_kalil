@@ -169,7 +169,6 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 10002;
     background-color: $secundaria;
 
     .brand-logo {
@@ -1063,6 +1062,13 @@ body {
     .btn-small {
         margin: 5px auto !important;
     }
+}
+
+.botao-adicionar {
+    position: fixed;
+    right: 12px;
+    top: 4px;
+    z-index: 10003;
 }
 
 #carregando {

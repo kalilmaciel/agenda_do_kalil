@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->id()->primary();
+            $table->string('name', 100);
+            $table->string('email', 100)->unique();
             $table->string('cpf_cnpj', 20)->unique();
             $table->string('celular', 100)->nullable();
             $table->integer('permissao')->default(1);
@@ -34,16 +34,21 @@ return new class extends Migration
         });
 
         Schema::create('telefones', function (Blueprint $table) {
-            $table->string('id')->autoIncrement();
-            $table->bigInteger('usuarios_id')->nullable();
-            $table->bigInteger('contatos_id')->nullable();
+            $table->id('id')->primary();
+            $table->unsignedBigInteger('usuarios_id')->nullable();
+            $table->foreign('usuarios_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('contatos_id')->nullable();
+            $table->foreign('contatos_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('telefone', 20);
             $table->timestamps();
         });
 
         Schema::create('contatos', function (Blueprint $table) {
-            $table->string('id')->autoIncrement();
-            $table->bigInteger('usuarios_id');
+            $table->id('id')->primary();
+            $table->unsignedBigInteger('usuarios_id')->nullable();
+            $table->foreign('usuarios_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name', 100);
+            $table->string('email', 100);
             $table->string('cpf_cnpj', 20);
             $table->string('celular', 15);
             $table->string('imagem', 50)->nullable();
