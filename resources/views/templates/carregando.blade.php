@@ -6,7 +6,7 @@
         </div>
         <br>
         <div id="logo_carregando" class="imagem"
-            style="background-image: url('{{ asset('assets/img/favicon.jpg') }}')">
+            style="background-image: url('{{ asset('assets/img/favicon.png') }}')">
         </div>
         <div class="text-primaria">
             <p class="animate__animated animate__heartBeat animate__infinite delay_4">

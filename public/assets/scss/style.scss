@@ -105,6 +105,12 @@
     width: 100%;
 }
 
+.img-responsive {
+    display: block;
+    max-width: 90%;
+    margin: auto;
+}
+
 .pointer {
     cursor: pointer !important;
 }
@@ -176,11 +182,16 @@ body {
         img {
             margin-top: 6px;
             height: 50px;
+            @media (max-width: 600px) {
+                margin-top: 6px;
+                height: 40px;
+            }
         }
 
-        @media (max-width: 990px) {
+        @media (max-width: 600px) {
             .brand-logo {
                 left: 50px;
+                width: 70%;
             }
         }
         @media (min-width: 991px) {
@@ -223,6 +234,7 @@ body {
 }
 
 .sidenav {
+    margin-top: 65px;
     padding-bottom: 130px;
     .collapsible {
         & > li {
@@ -264,9 +276,9 @@ body {
     }
 
     .user-view {
-        height: 320px;
+        height: 220px;
         margin-bottom: 0;
-        padding-top: 90px;
+        padding-top: 20px;
 
         .background {
             background-position: center;
@@ -336,7 +348,7 @@ body {
     }
 
     @media (max-width: 600px) {
-        margin-top: 108px;
+        margin-top: 55px;
         padding-bottom: 180px;
     }
 }
