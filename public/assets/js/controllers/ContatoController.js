@@ -89,7 +89,9 @@ function localizar(latitude, longitude, nome, endereco, centralizar) {
 function getEndereco(obj) {
     const value = obj.value;
     const url = base_url + "/api/cep/" + value;
+    carregando(true);
     getDados(url).then((data) => {
+        carregando(false);
         if (data.data.logradouro) {
             $("#endereco").val(data.data.logradouro);
             $("#bairro").val(data.data.bairro);

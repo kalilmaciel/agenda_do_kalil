@@ -51,6 +51,13 @@ return [
 
         'ses' => [
             'transport' => 'ses',
+            'key' => env('AWS_EMAIL_KEY'),
+            'secret' => env('AWS_EMAIL_SECRET'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+                'name' => env('MAIL_FROM_NAME', 'Example'),
+            ],
         ],
 
         'postmark' => [

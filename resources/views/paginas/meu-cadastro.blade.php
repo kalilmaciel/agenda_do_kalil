@@ -25,8 +25,9 @@
                 <div class="row">
                     <div class="col m4 s12 center-align">
                         <a href="{{ $user['imagem'] ? $funcoes->getImagem($user['imagem'], 'usuarios') : asset('assets/img/usuario.png') }}"
-                             data-fancybox="gallery" data-caption="Imagem">
-                            <img class="foto_upload 1" src="{{ $user['imagem'] ? $funcoes->getImagem($user['imagem'], 'usuarios') : asset('assets/img/usuario.png') }}" />
+                            data-fancybox="gallery" data-caption="Imagem">
+                            <img class="foto_upload 1"
+                                src="{{ $user['imagem'] ? $funcoes->getImagem($user['imagem'], 'usuarios') : asset('assets/img/usuario.png') }}" />
                         </a>
                         <br>
                         <div class="file-field">
@@ -37,6 +38,9 @@
                             <div class="file-path-wrapper">
                                 <input class="file-path validate hide" type="text">
                             </div>
+                            @error('foto')
+                                <span class="helper-text red-text">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col m8 s12 ">
@@ -45,34 +49,32 @@
                                 <input type="text" id="name" name="name" class="validate"
                                     value="{{ $funcoes->setValue($user, 'name', old('name')) }}" required />
                                 <label for="name">Nome</label>
+                                @error('name')
+                                    <span class="helper-text red-text">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col m12 s12 input-field no-margin-bottom">
                                 <input type="text" id="email" name="email" class="validate"
                                     value="{{ $funcoes->setValue($user, 'email', old('email')) }}" required />
                                 <label for="email">Email</label>
+                                @error('email')
+                                    <span class="helper-text red-text">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col m8 s6 input-field no-margin-bottom">
                                 <input type="text" id="cpf_cnpj" name="cpf_cnpj" class="validate"
                                     value="{{ $funcoes->formatar($funcoes->setValue($user, 'cpf_cnpj', old('cpf_cnpj')), 'cpfcnpj') }}"
                                     onkeyup="mascara('###.###.###-##',this,event)" />
                                 <label for="cpf_cnpj">CPF</label>
+                                @error('cpf_cnpj')
+                                    <span class="helper-text red-text">{{ $message }}</span>
+                                @enderror
                             </div>
 
                         </div>
                     </div>
                 </div>
-                <div class="row no-margin-bottom">
-                    <div class="col s6 input-field no-margin-bottom">
-                        <input type="password" id="password" name="password" class="validate"
-                            value="{{ old('password') }}" />
-                        <label for="password">Senha</label>
-                    </div>
-                    <div class="col s6 input-field no-margin-bottom">
-                        <input type="password" id="password_confirmation" name="password_confirmation" class="validate"
-                            value="{{ old('password_confirmation') }}" />
-                        <label for="password_confirmation">Repita a senha</label>
-                    </div>
-                </div>
+
                 <div class="row no-margin-bottom">
                     <div class="col m4 s6 input-field no-margin-bottom">
                         <input type="text" id="cep" name="cep" class="validate"
@@ -129,5 +131,69 @@
             </div>
 
         </form>
+
+        <div class="row no-margin-bottom container">
+            <div class="col s12">
+                <ul class="collapsible" id="collapsible_mapa">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="fad default-icon-theme fa-key fa-map left"></i>
+                            Alteração de senha
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row destaques">
+                                <form method="POST" action="{{ route('user-password.update') }}"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="row no-margin-bottom">
+                                        <div class="col m4 s6 input-field no-margin-bottom">
+                                            <input type="password" id="current_password" name="current_password"
+                                                class="validate" />
+                                            <label for="current_password">Senha atual</label>
+                                            @error('current_password')
+                                                <span class="helper-text red-text">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col m4 s6 input-field no-margin-bottom">
+                                            <input type="password" id="password" name="password" class="validate" />
+                                            <label for="password">Nova Senha</label>
+                                            @error('password')
+                                                <span class="helper-text red-text">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col m4 s6 input-field no-margin-bottom">
+                                            <input type="password" id="password_confirmation"
+                                                name="password_confirmation" class="validate" />
+                                            <label for="password_confirmation">Repita a nova senha</label>
+                                            @error('password_confirmation')
+                                                <span class="helper-text red-text">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col s6 input-field no-margin-bottom">
+                                            @if ($errors->any())
+                                                <ul>
+                                                    @foreach ($errors->all() as $erro)
+                                                        <span class="helper-text red-text">{{ $erro }}</span>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
+                                        <div class="col s6 input-field no-margin-bottom right-align">
+                                            <button type="submit" class="btn-small orange waves-effect redondo">
+                                                <i class="fa fa-2x fa-arrows-rotate left"></i>
+                                                Atualizar senha
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
     </main>
 @endsection

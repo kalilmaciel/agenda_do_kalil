@@ -38,9 +38,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
 
-            $imagem = Funcoes::uploadImagem($input['foto'], 'agenda/usuarios');
-            if ($imagem) {
-                $user->imagem = $imagem;
+            if (array_key_exists('foto', $input) && $input['foto']) {
+                $imagem = Funcoes::uploadImagem($input['foto'], 'agenda/usuarios');
+                if ($imagem) {
+                    $user->imagem = $imagem;
+                }
             }
 
             $user->forceFill([
