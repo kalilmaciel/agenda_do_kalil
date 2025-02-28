@@ -13,7 +13,7 @@ alguma operação tenha ocorrido corretamente
         <script>
             $(document).ready(function() {
                 Aviso.fire({
-                    icon: "error",
+                    icon: "success",
                     title: "Operação efetuada com sucesso!",
                 });
             });

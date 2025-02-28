@@ -45,11 +45,14 @@ class ContatosController extends Controller
 
         //O método use(variavel) serve para trazer para dentro da função agregada uma variável de fora
 
-        $contatos = Contato::where('name', 'like', "%{$filtro->busca}%")
-            ->orWhere('email', 'like', "%{$filtro->busca}%")
-            ->orWhere('telefone', 'like', "%{$filtro->busca}%")
-            ->orWhere('celular', 'like', "%{$filtro->busca}%")
-            ->orWhere('cpf_cnpj', 'like', "%{$filtro->busca}%")
+        $contatos = Contato::where('usuarios_id', '=', session('user')['id'])
+            ->where('name', 'like', "%{$filtro->busca}%")
+            ->where(function ($query) use ($filtro) {
+                return $query->orWhere('email', 'like', "%{$filtro->busca}%")
+                    ->orWhere('telefone', 'like', "%{$filtro->busca}%")
+                    ->orWhere('celular', 'like', "%{$filtro->busca}%")
+                    ->orWhere('cpf_cnpj', 'like', "%{$filtro->busca}%");
+            })
             ->orderBy($ordem, $sentido)
             ->paginate($filtro->por_pagina)
             ->withQueryString();
