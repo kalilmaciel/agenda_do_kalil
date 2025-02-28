@@ -2,6 +2,10 @@
 
 @extends('estrutura_interna')
 
+@section('js_extra')
+    <script src="{{ asset('assets/js/controllers/ContatosController.js') }}"></script>
+@endsection
+
 @section('content')
     <main>
 

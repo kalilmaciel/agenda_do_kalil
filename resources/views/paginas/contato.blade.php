@@ -4,8 +4,12 @@
 
 @section('js_extra')
     <script src="{{ asset('assets/js/controllers/ContatoController.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
 @endsection
 
+@section('css_extra')
+    <link rel="stylesheet" href="{{ asset('assets/node_modules/leaflet/dist/leaflet.css') }}">
+@endsection
 
 @section('content')
     <main>
@@ -18,7 +22,8 @@
         <form method="POST" action="{{ route('salvar-contato') }}" enctype="multipart/form-data">
             @csrf
 
-            <input type="hidden" name="id" id="id" value="{{ $funcoes->encrypt($funcoes->setValue($contato, 'id', old('id'))) }}">
+            <input type="hidden" name="id" id="id"
+                value="{{ $funcoes->encrypt($funcoes->setValue($contato, 'id', old('id'))) }}">
 
             <div class="container">
                 <div class="row">
@@ -111,8 +116,49 @@
                         ])
                         <label for="uf">Estado</label>
                     </div>
+                    <div class="col m4 s12 input-field no-margin-bottom">
+                        <input type="text" id="latitude" name="latitude" class="validate"
+                            value="{{ $funcoes->setValue($contato, 'latitude', old('latitude')) }}" />
+                        <label for="latitude">Latitude</label>
+                    </div>
+                    <div class="col m4 s12 input-field no-margin-bottom">
+                        <input type="text" id="longitude" name="longitude" class="validate"
+                            value="{{ $funcoes->setValue($contato, 'longitude', old('longitude')) }}" />
+                        <label for="longitude">Longitude</label>
+                    </div>
+                    <div class="col m4 s12">
+                        <br>
+                        <a href="#!" onclick="getLocalizacaoReversa()" class="btn-small blue redondo">
+                            Obter Endereço das coordenadas
+                        </a>
+                    </div>
 
                 </div>
+
+                @if ($contato['id'] > 0)
+                    <div class="row no-margin-bottom">
+                        <div class="col s12">
+                            <ul class="collapsible" id="collapsible_mapa">
+                                <li
+                                    class="{{ $contato['latitude'] != 0.0 && $contato['longitude'] != 0.0 ? 'active' : '' }}">
+                                    <div class="collapsible-header">
+                                        <i class="fad default-icon-theme fa-solid fa-map left"></i>
+                                        Localização no mapa
+                                        <a href="#!" onclick="getLocalizacao()"
+                                            class="secondary-content btn-small blue redondo">
+                                            Obter localização
+                                        </a>
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <div class="row destaques">
+                                            <div class="mapa" id="div_mapa"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
 
             </div>
 

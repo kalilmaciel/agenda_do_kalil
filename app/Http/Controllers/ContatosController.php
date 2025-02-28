@@ -121,8 +121,8 @@ class ContatosController extends Controller
         $contato->bairro = $request->input('bairro');
         $contato->cidade = $request->input('cidade');
         $contato->uf = $request->input('uf');
-        $contato->latitude = Funcoes::onlyNumbers($request->input('latitude'));
-        $contato->longitude = Funcoes::onlyNumbers($request->input('longitude'));
+        $contato->latitude = floatval(substr($request->input('latitude'), 0, 11));
+        $contato->longitude = floatval(substr($request->input('longitude'), 0, 11));
 
         $imagem = Funcoes::uploadImagem($request->file('foto'), 'agenda/contatos');
         if ($imagem) {

@@ -4,7 +4,8 @@
             <div class="background" style="background-image: url({{ asset('assets/img/office.jpeg') }})">
             </div>
             <a href="{{ route('meu-cadastro') }}">
-                <img class="circle" src="{{ session('image_location') . 'usuarios/t_' . session('user.imagem') }}">
+                <img class="circle"
+                    src="{{ session('user')['imagem'] ? $funcoes->getImagem(session('user')['imagem'], 'usuarios') : asset('assets/img/usuario.png') }}">
             </a>
             <p class="white-text ">
                 <i class="material-icons left">person_outline</i>

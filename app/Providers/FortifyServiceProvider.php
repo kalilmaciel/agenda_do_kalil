@@ -50,18 +50,8 @@ class FortifyServiceProvider extends ServiceProvider
             $user = User::where('email', $request->email)->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
-                session(
-                    [
-                        'user' => [
-                            'id' => $user->id,
-                            'name' => $user->name,
-                            'email' => $user->email,
-                            'imagem' => $user->imagem,
-                            'permissao' => $user->permissao,
-                        ],
-                        'image_location' => env('IMAGE_LOCATION')
-                    ]
-                );
+
+                User::carregarDadosNaSessao($user);
 
                 return $user;
             }

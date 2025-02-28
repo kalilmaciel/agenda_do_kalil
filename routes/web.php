@@ -3,12 +3,13 @@
 use App\Http\Controllers\CepController;
 use App\Http\Controllers\ContatosController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MapaController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ApiMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 //Rotas Autenticadas
@@ -21,6 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/contatos', [ContatosController::class, 'listar'])->name('contatos');
     Route::get('/contato/{id}', [ContatosController::class, 'detalhar'])->name('detalhar-contato');
     Route::post('/contato', [ContatosController::class, 'salvar'])->name('salvar-contato');
+
+    Route::get('/sair', function () {
+        session()->flush();
+        return redirect()->route('login')->with('success', 'Você saiu do sistema.');
+    })->name('sair');
 });
 
 //Administrador
@@ -29,4 +35,6 @@ Route::middleware('AdminMiddleware')->group(function () {
 });
 
 //Rotas de API
-Route::get('api/cep/{id}', [CepController::class, 'get'])->middleware(ApiMiddleware::class);
+Route::get('api/cep/{cep}', [CepController::class, 'get'])->middleware(ApiMiddleware::class);
+Route::post('api/localizacaoDireta', [MapaController::class, 'getDireta'])->middleware(ApiMiddleware::class);
+Route::post('api/localizacaoReversa', [MapaController::class, 'getReversa'])->middleware(ApiMiddleware::class);

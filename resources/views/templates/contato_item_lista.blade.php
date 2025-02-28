@@ -6,9 +6,24 @@
                    style="background-image: url({{ $contato['imagem'] ? $getImagem($contato['imagem'], 'contatos') : asset('assets/img/usuario.png') }})">
                </div>
            </a>
-           <a href="{{ route('detalhar-contato', ['id' => $encrypt($contato['id'])]) }}" class="title black-text darken-4">
+           <a href="#!" class="dropdown-trigger title black-text darken-4"
+               data-target="dropdown{{ $contato['id'] }}">
                {{ $contato['name'] }}
            </a>
+
+           <ul id="dropdown{{ $contato['id'] }}" class='dropdown-content' data-beloworigin='true'>
+               <li>
+                   <a href="{{ route('detalhar-contato', ['id' => $encrypt($contato['id'])]) }}">
+                       Editar
+                   </a>
+               </li>
+               <li>
+                   <a href="#!"
+                       onclick="discar('{{ $contato['name'] }}', '{{ $contato['celular'] }}', '{{ $contato['email'] }}')">
+                       Chamar contato
+                   </a>
+               </li>
+           </ul>
 
            <div class="row no-margin dados-adicionais">
                <div class="col m4 s12 no-padding-left tooltipped" data-position="top" data-tooltip="E-mail">
@@ -24,10 +39,11 @@
                    </span>
                </div>
                <div class="col m4 s6 no-padding-left tooltipped" data-position="top" data-tooltip="Celular">
-                   <span class="btn btn-flat btn-small disabled no-padding-left">
+                   <a href="#!" onclick="discar('{{ $contato['celular'] }}')"
+                       class="btn btn-flat btn-small disabled no-padding-left">
                        <i class="fa fa-2x fa-phone left"></i>
                        {{ $formatar($contato['celular'], 'telefone') }}
-                   </span>
+                   </a>
                </div>
            </div>
        </div>

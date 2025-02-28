@@ -159,6 +159,43 @@ async function getDados(url) {
     return data;
 }
 
+async function postDados(url, dados) {
+    if (!dados) {
+        dados = {};
+    }
+    const request = new Request(url, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        cache: "default",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    const res = await fetch(request);
+    const data = await res.json();
+    return data;
+}
+
+async function postDadosAsync(url, dados) {
+    if (!dados) {
+        dados = {};
+    }
+    const request = new Request(url, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        cache: "default",
+        mode: "cors",
+        credentials: "omit",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const res = await fetch(request);
+    const data = await res.json();
+    return data;
+}
+
 function malditoIOS() {
     var iOS =
         !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
@@ -613,4 +650,27 @@ function aviso(texto, tipo, time) {
         icon: tipo ? tipo : "success",
         timer: time ? time : 5000,
     });
+}
+
+function abrirZap(numero, texto) {
+    if (!texto) {
+        texto = "Olá";
+    }
+    var numero = numero.replace(/\D/g, "");
+    if (numero.length > 10) {
+        window.open(
+            `https://api.whatsapp.com/send/?phone=55${numero}&text=${texto}`,
+            "_system"
+        );
+    } else {
+        aviso("Número inválido.", "error");
+    }
+}
+
+function abrirLigacao(numero){
+    window.location.href = `tel://${numero}`;
+}
+
+function abrirEmail(nome, email){
+    window.open(`mailto:${email}?subject=Olá ${email}&body=E aí, como vai?`);
 }

@@ -25,6 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cpf_cnpj',
+        'imagem'
     ];
 
     /**
@@ -48,6 +50,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function carregarDadosNaSessao(User $user)
+    {
+        session(
+            [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'imagem' => $user->imagem,
+                    'permissao' => $user->permissao,
+                ],
+                'image_location' => env('IMAGE_LOCATION')
+            ]
+        );
     }
 
     public function contatos()

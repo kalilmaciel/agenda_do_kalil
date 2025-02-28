@@ -1,7 +1,7 @@
 @inject('funcoes', 'App\Services\Funcoes')
 
 <select id="{{ $id }}" name="{{ $name }}">
-    <option value="" selected disabled >Selecione uma opção</option>
+    <option value="" selected >Selecione uma opção</option>
     <option value="AC" {{ $funcoes->setSelected($objeto, $atributo, 'AC', $old_value) }}>Acre</option>
     <option value="AL" {{ $funcoes->setSelected($objeto, $atributo, 'AL', $old_value) }}>Alagoas</option>
     <option value="AP" {{ $funcoes->setSelected($objeto, $atributo, 'AP', $old_value) }}>Amapá</option>
