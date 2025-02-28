@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contato;
+use App\Models\User;
 use App\Rules\ValidatorCpfCnpj;
 use App\Services\Funcoes;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class ContatosController extends Controller
             'por_pagina' => $request->input('por_pagina', 20),
             'ordem' => $request->input('ordem', 'd_dec'),
             'busca' => $request->input('busca'),
+            'mapa' => $request->input('mapa'),
         ];
 
         $ordem = 'name';
@@ -56,10 +58,12 @@ class ContatosController extends Controller
             "Contatos"
         );
 
-        return view('paginas.contatos', compact(['contatos', 'filtro', 'breadcrumb']));
+        $user = User::find(session('user')['id'])->toArray();
+
+        return view('paginas.contatos', compact(['contatos', 'filtro', 'breadcrumb', 'user']));
     }
 
-    public function detalhar($contatos_id): View
+    public function detalhar($contatos_id)
     {
         $contatos_id = Funcoes::decrypt($contatos_id);
         if (intval($contatos_id) > 0) {

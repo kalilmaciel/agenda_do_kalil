@@ -26,19 +26,24 @@
            </ul>
 
            <div class="row no-margin dados-adicionais">
-               <div class="col m4 s12 no-padding-left tooltipped" data-position="top" data-tooltip="E-mail">
+               <div class="col s9 no-padding-left tooltipped" data-position="top" data-tooltip="E-mail">
                    <span class="btn btn-flat btn-small disabled no-padding-left">
                        <i class="fa fa-2x fa-at left"></i>
                        {{ $contato['email'] }}
                    </span>
                </div>
-               <div class="col m4 s6 no-padding-left tooltipped" data-position="top" data-tooltip="CPF">
+               <div class="col s3 no-padding-left tooltipped right-align" data-position="top" data-tooltip="Localizar no mapa">
+                   <a href="#!" onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')" class="btn btn-flat btn-small redondo blue white-text">
+                       <i class="fa fa-2x fa-location-pin left"></i>
+                   </a>
+               </div>
+               <div class="col s6 no-padding-left tooltipped" data-position="top" data-tooltip="CPF">
                    <span class="btn btn-flat btn-small disabled no-padding-left">
                        <i class="fa fa-2x fa-id-card left"></i>
                        {{ $formatar($contato['cpf_cnpj'], 'cpfcnpj') }}
                    </span>
                </div>
-               <div class="col m4 s6 no-padding-left tooltipped" data-position="top" data-tooltip="Celular">
+               <div class="col s6 no-padding-left tooltipped" data-position="top" data-tooltip="Celular">
                    <a href="#!" onclick="discar('{{ $contato['celular'] }}')"
                        class="btn btn-flat btn-small disabled no-padding-left">
                        <i class="fa fa-2x fa-phone left"></i>

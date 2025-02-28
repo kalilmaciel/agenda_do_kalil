@@ -55,6 +55,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'bairro' => $input['bairro'],
                 'cidade' => $input['cidade'],
                 'uf' => $input['uf'],
+                'latitude' => floatval(substr($input['latitude'], 0, 11)),
+                'longitude' => floatval(substr($input['longitude'], 0, 11)),
             ])->save();
         }
     }

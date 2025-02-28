@@ -4,6 +4,7 @@
 
 @section('js_extra')
     <script src="{{ asset('assets/js/controllers/ContatoController.js') }}"></script>
+    <script src="{{ asset('assets/js/controllers/MapaController.js') }}"></script>
     <script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
 @endsection
 

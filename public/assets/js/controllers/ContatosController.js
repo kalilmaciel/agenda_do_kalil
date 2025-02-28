@@ -41,3 +41,17 @@ function discar(nome, telefone, email) {
         });
     }, 500);
 }
+
+function centralizar(latitude, longitude, nome) {
+    $("#latitude").val(latitude);
+    $("#longitude").val(longitude);
+    setTimeout(() => {
+        localizar(
+            latitude,
+            longitude,
+            nome,
+            "Entre no contato para detalhar",
+            true
+        );
+    }, 500);
+}

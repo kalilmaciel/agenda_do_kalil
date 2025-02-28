@@ -11,16 +11,23 @@ class UserController extends Controller
 {
     public function meu_cadastro(): View
     {
+        $breadcrumb = array(
+            "Meu cadastro"
+        );
         $user = User::find(Auth::user()->id)->toArray();
-        return view('paginas.meu-cadastro', compact('user'));
+        return view('paginas.meu-cadastro', compact('user', 'breadcrumb'));
     }
 
     public function listar(): View
     {
-        return view('paginas.admin.listar-usuarios');
+        $breadcrumb = array(
+            "Listar usuários"
+        );
+        return view('paginas.admin.listar-usuarios', compact('breadcrumb'));
     }
 
-    public function destruir_conta(){
+    public function destruir_conta()
+    {
         $user = User::find(Auth::user()->id);
         $user->delete();
         session()->flush();

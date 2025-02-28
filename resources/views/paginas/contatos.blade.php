@@ -4,9 +4,18 @@
 
 @section('js_extra')
     <script src="{{ asset('assets/js/controllers/ContatosController.js') }}"></script>
+    <script src="{{ asset('assets/js/controllers/MapaController.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
+@endsection
+
+@section('css_extra')
+    <link rel="stylesheet" href="{{ asset('assets/node_modules/leaflet/dist/leaflet.css') }}">
 @endsection
 
 @section('content')
+    <input type="hidden" name="latitude" id="latitude" value="{{ floatval($user['latitude']) }}">
+    <input type="hidden" name="longitude" id="longitude" value="{{ floatval($user['longitude']) }}">
+
     <main>
 
         <div class="row titulo-mobile hide-on-med-and-up">
@@ -41,8 +50,10 @@
                                     </option>
                                     <option value="d_dec" {{ $filtro->ordem == 'd_dec' ? 'selected' : '' }}>Dt. Cadastro ↘
                                     </option>
-                                    <option value="a_cre" {{ $filtro->ordem == 'a_cre' ? 'selected' : '' }}>Nome ↗</option>
-                                    <option value="a_dec" {{ $filtro->ordem == 'a_dec' ? 'selected' : '' }}>Nome ↘</option>
+                                    <option value="a_cre" {{ $filtro->ordem == 'a_cre' ? 'selected' : '' }}>Nome ↗
+                                    </option>
+                                    <option value="a_dec" {{ $filtro->ordem == 'a_dec' ? 'selected' : '' }}>Nome ↘
+                                    </option>
                                 </select>
                             </div>
 
@@ -57,7 +68,17 @@
 
                             </div>
                             <div class="row no-margin-bottom">
-                                <div class="col s12 right-align">
+                                <div class="col m6 s12">
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" class="filled-in" value="1"
+                                                {{ $funcoes->setChecked($filtro, 'mapa') }} onchange="this.form.submit()"
+                                                name="mapa" />
+                                            <span>Mostrar mapa</span>
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="col m6 s12 right-align">
                                     <a href="{{ route('contatos') }}" class="btn waves-effect waves-light blue redondo">
                                         <i class="fa fa-2x fa-times left"></i>
                                         Limpar busca
@@ -77,9 +98,14 @@
         <div id="inicio"></div>
 
         <div class="row">
-            <div class="col s12">
+            <div class="col {{ $filtro->mapa == '1' ? 'm6 s12' : 's12' }}">
                 <x-lista-contatos :lista="$contatos" />
             </div>
+            @if ($filtro->mapa == '1')
+                <div class="col {{ $filtro->mapa == '1' ? 'm6 s12' : 's12' }}">
+                    <div id="div_mapa" class="mapa"></div>
+                </div>
+            @endif
             <div class="col s12 center">
                 {{ $contatos->links() }}
             </div>

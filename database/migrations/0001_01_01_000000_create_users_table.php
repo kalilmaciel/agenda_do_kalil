@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('cep', 9)->nullable();
             $table->string('cidade', 50)->nullable();
             $table->string('uf', 2)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->dateTime('last_login')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

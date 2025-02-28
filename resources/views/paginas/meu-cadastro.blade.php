@@ -3,9 +3,14 @@
 @extends('estrutura_interna')
 
 @section('js_extra')
-    <script src="{{ asset('assets/js/controllers/MeuCadastroController.js') }}"></script>
+<script src="{{ asset('assets/js/controllers/MapaController.js') }}"></script>
+<script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
+<script src="{{ asset('assets/js/controllers/MeuCadastroController.js') }}"></script>
 @endsection
 
+@section('css_extra')
+    <link rel="stylesheet" href="{{ asset('assets/node_modules/leaflet/dist/leaflet.css') }}">
+@endsection
 
 @section('content')
     <main>
@@ -92,17 +97,17 @@
                             value="{{ $funcoes->setValue($user, 'complemento', old('complemento')) }}" />
                         <label for="complemento">Complemento</label>
                     </div>
-                    <div class="col m4 s6 input-field no-margin-bottom">
+                    <div class="col m4 s12 input-field no-margin-bottom">
                         <input type="text" id="bairro" name="bairro" class="validate"
                             value="{{ $funcoes->setValue($user, 'bairro', old('bairro')) }}" />
                         <label for="bairro">Bairro</label>
                     </div>
-                    <div class="col s6 input-field no-margin-bottom">
+                    <div class="col m6 s12 input-field no-margin-bottom">
                         <input type="text" id="cidade" name="cidade" class="validate"
                             value="{{ $funcoes->setValue($user, 'cidade', old('cidade')) }}" />
                         <label for="cidade">Cidade</label>
                     </div>
-                    <div class="col s6 input-field no-margin-bottom">
+                    <div class="col m6 s12 input-field no-margin-bottom">
                         @include('templates.select_uf', [
                             'id' => 'uf',
                             'name' => 'uf',
@@ -111,6 +116,22 @@
                             'old_value' => old('uf'),
                         ])
                         <label for="uf">Estado</label>
+                    </div>
+                    <div class="col m4 s12 input-field no-margin-bottom">
+                        <input type="text" id="latitude" name="latitude" class="validate"
+                            value="{{ $funcoes->setValue($user, 'latitude', old('latitude')) }}" />
+                        <label for="latitude">Latitude</label>
+                    </div>
+                    <div class="col m4 s12 input-field no-margin-bottom">
+                        <input type="text" id="longitude" name="longitude" class="validate"
+                            value="{{ $funcoes->setValue($user, 'longitude', old('longitude')) }}" />
+                        <label for="longitude">Longitude</label>
+                    </div>
+                    <div class="col m4 s12">
+                        <br>
+                        <a href="#!" onclick="getLocalizacaoReversa()" class="btn-small blue redondo">
+                            Obter Endereço das coordenadas
+                        </a>
                     </div>
 
                 </div>
@@ -135,9 +156,32 @@
         <div class="row no-margin-bottom container">
             <div class="col s12">
                 <ul class="collapsible" id="collapsible_mapa">
+                    <li
+                        class="{{ $user['latitude'] != 0.0 && $user['longitude'] != 0.0 ? 'active' : '' }}">
+                        <div class="collapsible-header">
+                            <i class="fad default-icon-theme fa-solid fa-map left"></i>
+                            Localização no mapa
+                            <a href="#!" onclick="getLocalizacao()"
+                                class="secondary-content btn-small blue redondo">
+                                Obter localização
+                            </a>
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row destaques">
+                                <div class="mapa" id="div_mapa"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row no-margin-bottom container">
+            <div class="col s12">
+                <ul class="collapsible" id="collapsible_mapa">
                     <li class="{{ $errors->updatePassword->any() ? 'active' : '' }}">
                         <div class="collapsible-header">
-                            <i class="fad default-icon-theme fa-key fa-map left"></i>
+                            <i class="fad default-icon-theme fa-key left"></i>
                             Alteração de senha
                         </div>
                         <div class="collapsible-body">
@@ -210,7 +254,7 @@
                                         <div class="col m5 s12 input-field no-margin-bottom">
                                             <p>
                                                 A exclusão da conta irá apagar seu usuário, bem como todos
-                                                os contatos vinculados a ele.
+                                                os users vinculados a ele.
                                             </p>
                                             <p class="red-text">
                                                 ESTA OPERAÇÃO É IRREVERSÍVEL.
