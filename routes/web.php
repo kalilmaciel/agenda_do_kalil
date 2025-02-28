@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::get('/meu-cadastro', [UserController::class, 'meu_cadastro'])->name('meu-cadastro');
+    Route::post('/destruir-conta', [UserController::class, 'destruir_conta'])->name('destruir-conta');
 
     Route::get('/contatos', [ContatosController::class, 'listar'])->name('contatos');
     Route::post('/contatos', [ContatosController::class, 'listar'])->name('contatos');

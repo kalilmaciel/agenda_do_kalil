@@ -19,4 +19,11 @@ class UserController extends Controller
     {
         return view('paginas.admin.listar-usuarios');
     }
+
+    public function destruir_conta(){
+        $user = User::find(Auth::user()->id);
+        $user->delete();
+        session()->flush();
+        return redirect()->route('login')->with('success', 'Sua conta foi excluída com sucesso.');
+    }
 }

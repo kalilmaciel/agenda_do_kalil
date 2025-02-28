@@ -135,15 +135,14 @@
         <div class="row no-margin-bottom container">
             <div class="col s12">
                 <ul class="collapsible" id="collapsible_mapa">
-                    <li>
+                    <li class="{{ $errors->updatePassword->any() ? 'active' : '' }}">
                         <div class="collapsible-header">
                             <i class="fad default-icon-theme fa-key fa-map left"></i>
                             Alteração de senha
                         </div>
                         <div class="collapsible-body">
-                            <div class="row destaques">
-                                <form method="POST" action="{{ route('user-password.update') }}"
-                                    enctype="multipart/form-data">
+                            <div class="row no-margin-bottom destaques">
+                                <form method="POST" action="{{ route('user-password.update') }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="row no-margin-bottom">
@@ -171,10 +170,10 @@
                                             @enderror
                                         </div>
                                         <div class="col s6 input-field no-margin-bottom">
-                                            @if ($errors->any())
+                                            @if ($errors->updatePassword->any())
                                                 <ul>
-                                                    @foreach ($errors->all() as $erro)
-                                                        <span class="helper-text red-text">{{ $erro }}</span>
+                                                    @foreach ($errors->updatePassword->all() as $error)
+                                                        <li class="red-text">{{ $error }}</li>
                                                     @endforeach
                                                 </ul>
                                             @endif
@@ -186,6 +185,7 @@
                                             </button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -193,6 +193,53 @@
                 </ul>
             </div>
         </div>
+
+        <div class="row no-margin-bottom container">
+            <div class="col s12">
+                <ul class="collapsible" id="collapsible_mapa">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="default-icon-theme fa-duotone fa-regular fa-users-slash left"></i>
+                            Exclusão da conta
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row no-margin-bottom destaques">
+                                <form method="POST" action="{{ route('destruir-conta') }}" onsubmit="return confirm('Tem certeza que deseja excluir sua conta?');">
+                                    @csrf
+                                    <div class="row no-margin-bottom">
+                                        <div class="col m5 s12 input-field no-margin-bottom">
+                                            <p>
+                                                A exclusão da conta irá apagar seu usuário, bem como todos
+                                                os contatos vinculados a ele.
+                                            </p>
+                                            <p class="red-text">
+                                                ESTA OPERAÇÃO É IRREVERSÍVEL.
+                                            </p>
+                                        </div>
+                                        <div class="col m4 s12 input-field no-margin-bottom">
+                                            <input type="password" id="current_password" name="current_password"
+                                                class="validate" />
+                                            <label for="current_password">Senha atual</label>
+                                            @error('current_password')
+                                                <span class="helper-text red-text">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col m3 s12 input-field no-margin-bottom right-align">
+                                            <button type="submit" class="btn-small red waves-effect redondo">
+                                                <i class="fa fa-2x fa-arrows-rotate left"></i>
+                                                Destruir conta
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
 
 
     </main>

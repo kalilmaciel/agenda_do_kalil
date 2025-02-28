@@ -30,6 +30,7 @@ do e-mail tenha ocorrido corretamente
                 <form method="POST" action="{{ route('password.update') }}" onsubmit="carregando(true)">
                     @csrf
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
                     <div class="row no-margin-bottom">
                         <div class="input-field col s12 center no-margin-bottom">
                             <img src="{{ asset('assets/img/login-logo.png') }}" alt="" class="responsive-img">
