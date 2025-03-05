@@ -261,10 +261,10 @@
                                             </p>
                                         </div>
                                         <div class="col m4 s12 input-field no-margin-bottom">
-                                            <input type="password" id="current_password" name="current_password"
+                                            <input type="password" id="senha_atual" name="senha_atual"
                                                 class="validate" />
-                                            <label for="current_password">Senha atual</label>
-                                            @error('current_password')
+                                            <label for="senha_atual">Senha atual</label>
+                                            @error('senha_atual')
                                                 <span class="helper-text red-text">{{ $message }}</span>
                                             @enderror
                                         </div>
