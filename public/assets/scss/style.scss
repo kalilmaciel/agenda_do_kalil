@@ -910,6 +910,15 @@ body {
             .dados-adicionais {
                 margin-left: -80px;
 
+                .tooltipped span {
+                    display: block;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-align: left;
+                }
+
                 .dropdown-content {
                     width: 300px;
                     li {

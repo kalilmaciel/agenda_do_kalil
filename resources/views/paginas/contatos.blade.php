@@ -66,8 +66,8 @@
                             <div class="row no-margin-bottom">
                                 <div class="col s12 input-field">
                                     <input type="text" id="busca" name="busca" value="{{ $filtro->busca }}" />
-                                    <label for="busca">Entre com sua busca (Nome, email, telefone, celular ou
-                                        CPF)</label>
+                                    <label for="busca">Entre com sua busca </label>
+                                    <span class="helper-text">(Nome, email, telefone, celular ou CPF)</span>
                                 </div>
 
                             </div>

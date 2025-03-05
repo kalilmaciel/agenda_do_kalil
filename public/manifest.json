@@ -1,0 +1,17 @@
+{
+	"short_name": "F.R.I.E.N.D.S",
+	"name": "Friends",
+	"start_url": "/",
+	"theme_color": "#ff914d",
+	"background_color": "#ffffff",
+	"display": "fullscreen",
+	"display_override": ["standalone"],
+	"orientation": "any",
+	"icons": [
+		{
+			"src": "assets/favicons/android-icon-192x192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		}
+	]
+}

@@ -162,10 +162,8 @@ class ContatosController extends Controller
             $contato->imagem = $imagem;
         }
 
-        $salvo = $contato->save();
-
-        if ($salvo) {
-            return redirect()->route('detalhar-contato', ['id' => Funcoes::encrypt($salvo->id)])->withInput()->with('success', 'Salvo com sucesso!');
+        if ($contato->save()) {
+            return redirect()->route('detalhar-contato', ['id' => Funcoes::encrypt($contato->id)])->withInput()->with('success', 'Salvo com sucesso!');
         } else {
             return redirect()->route('detalhar-contato')->withInput()->with('error', 'Erro no salvamento.');
         }
