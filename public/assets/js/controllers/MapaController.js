@@ -14,7 +14,7 @@ var lat = $("#latitude").val();
 var lon = $("#longitude").val();
 
 async function iniciarMapa() {
-    if (lat == '' || lon == '') {
+    if (lat == "" || lon == "") {
         return;
     }
 
@@ -39,11 +39,7 @@ async function iniciarMapa() {
 function localizar(latitude, longitude, nome, endereco, centralizar) {
     iniciarMapa();
 
-    if (latitude == 0 && longitude == 0) {
-        Aviso.fire({
-            icon: "error",
-            title: "Coordenadas não especificadas.",
-        });
+    if (latitude == 0.0 && longitude == 0.0) {
         return;
     }
 
@@ -90,6 +86,9 @@ function localizar(latitude, longitude, nome, endereco, centralizar) {
 
 function getEndereco(obj) {
     const value = obj.value;
+    if (value.length != 10) {
+        return;
+    }
     const url = base_url + "/api/cep/" + value;
     carregando(true);
     getDados(url).then((data) => {
@@ -131,7 +130,7 @@ function getLocalizacao() {
             $("#longitude").val(end.lon);
             setTimeout(() => {
                 ativarComponentes();
-                localizar(end.lat, end.lon, '', 'Localizado', true);
+                localizar(end.lat, end.lon, "", "Localizado", true);
             }, 500);
         } else {
             Aviso.fire({

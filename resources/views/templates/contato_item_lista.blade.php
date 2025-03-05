@@ -23,6 +23,20 @@
                        Chamar contato
                    </a>
                </li>
+               @if ($contato['distancia'] > 0.0)
+                   <li>
+                       <a href="#!"
+                           onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')">
+                           Mostrar no mapa
+                       </a>
+                   </li>
+                   <li>
+                       <a href="#!"
+                           onclick="abrirMaps('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}')">
+                           Abrir no Google Maps
+                       </a>
+                   </li>
+               @endif
            </ul>
 
            <div class="row no-margin dados-adicionais">
@@ -32,11 +46,17 @@
                        {{ $contato['email'] }}
                    </span>
                </div>
-               <div class="col s3 no-padding-left tooltipped right-align" data-position="top" data-tooltip="Localizar no mapa">
-                   <a href="#!" onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')" class="btn btn-flat btn-small redondo blue white-text">
-                       <i class="fa fa-2x fa-location-pin left"></i>
-                   </a>
-               </div>
+               @if ($contato['distancia'] != 0.0)
+                   <div class="col s3 no-padding-left tooltipped right-align" data-position="top"
+                       data-tooltip="Distância de você">
+                       <a href="#!"
+                           onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')"
+                           class="btn btn-flat btn-small redondo blue white-text">
+                           <i class="fa fa-2x fa-location-pin left"></i>
+                           {{ $contato['distancia'] != 0.0 ? $contato['distancia'] . ' km' : '' }}
+                       </a>
+                   </div>
+               @endif
                <div class="col s6 no-padding-left tooltipped" data-position="top" data-tooltip="CPF">
                    <span class="btn btn-flat btn-small disabled no-padding-left">
                        <i class="fa fa-2x fa-id-card left"></i>

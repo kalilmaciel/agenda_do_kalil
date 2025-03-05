@@ -2,10 +2,6 @@
 
 @extends('estrutura_externa')
 
-@section('js_extra')
-    <script src="{{ asset('assets/js/controllers/MeuCadastroController.js') }}"></script>
-@endsection
-
 @include('estrutura.header')
 
 @section('content')

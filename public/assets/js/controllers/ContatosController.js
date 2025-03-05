@@ -43,6 +43,13 @@ function discar(nome, telefone, email) {
 }
 
 function centralizar(latitude, longitude, nome) {
+    if (!$('#div_mapa').length){
+        Aviso.fire({
+            icon: "error",
+            title: "Marque a opção 'Mostrar mapa' antes de ativar esta opção.",
+        });
+        return;
+    }
     $("#latitude").val(latitude);
     $("#longitude").val(longitude);
     setTimeout(() => {
@@ -54,4 +61,11 @@ function centralizar(latitude, longitude, nome) {
             true
         );
     }, 500);
+}
+
+function abrirMaps(latitude, longitude) {
+    window.open(
+        "https://maps.google.com.br/maps?q=" + latitude + "," + longitude,
+        "_system"
+    );
 }

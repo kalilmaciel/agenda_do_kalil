@@ -9,7 +9,7 @@
 
             <div class="row">
                 <div class="col s12 center-align">
-                    <img src="{{asset('assets/img/favicon.png')}}" class="img-responsive" alt="favicon">
+                    <img src="{{asset('assets/favicon/ms-icon-310x310.png')}}" class="img-responsive" alt="favicon">
                     <br>
                     <img src="{{asset('assets/img/login-logo.png')}}" class="img-responsive" alt="favicon">
                 </div>

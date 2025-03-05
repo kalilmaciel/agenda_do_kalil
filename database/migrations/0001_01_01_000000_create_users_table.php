@@ -64,6 +64,7 @@ return new class extends Migration
             $table->string('telefone', 20);
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('distancia', 10, 2)->nullable();
             $table->timestamps();
             $table->unique(['cpf_cnpj', 'usuarios_id']);
         });

@@ -387,12 +387,6 @@ class Funcoes
         return $diferenca->days > 0 ? $diferenca->days : 'LIBERADO';
     }
 
-    public static function formataDinheiro($valor)
-    {
-        return number_format($valor, 2, ',', '.');
-    }
-
-
     /**
      * Transforma uma string em um slug
      * @param string $string
@@ -502,7 +496,7 @@ class Funcoes
             return '(' . $matches[1] . ') ' . $matches[2] . '-' . $matches[3];
         }
 
-        return $phone; // return number without format
+        return $phone;
     }
 
     private static function formataCep($cep)
@@ -514,7 +508,7 @@ class Funcoes
             return  $matches[1] . '.' . $matches[2] . '-' . $matches[3];
         }
 
-        return $cep; // return number without format
+        return $cep;
     }
 
     private static function formataPorExtenso($value = 0, $uppercase = 0)
@@ -583,5 +577,29 @@ class Funcoes
         }
 
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
+    }
+
+    private static function formataDinheiro($valor)
+    {
+        return number_format($valor, 2, ',', '.');
+    }
+
+    /**
+     * Calcula a distância entre dois pontos GPS em Km
+     * @param float $lat1
+     * @param float $lon1
+     * @param float $lat2
+     * @param float $lon2
+     * @return float
+     */
+    public static function distanciaGPS(float $lat1, float $lon1, float $lat2, float $lon2): float
+    {
+        $lat1 = deg2rad($lat1);
+        $lat2 = deg2rad($lat2);
+        $lon1 = deg2rad($lon1);
+        $lon2 = deg2rad($lon2);
+        $distancia = (6371 * acos(cos($lat1) * cos($lat2) * cos($lon2 - $lon1) + sin($lat1) * sin($lat2)));
+        $distancia = number_format($distancia, 2, ".", "");
+        return floatval($distancia);
     }
 }

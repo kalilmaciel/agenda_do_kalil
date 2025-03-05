@@ -35,7 +35,7 @@
                         <div class="select-por-pagina">
 
                             <div class="input-field tooltipped" data-position="top" data-tooltip="Paginação">
-                                <select name="por_pagina">
+                                <select name="por_pagina" class="browser-default">
                                     <option value="20" {{ $filtro->por_pagina == 20 ? 'selected' : '' }}>20 por página
                                     </option>
                                     <option value="60" {{ $filtro->por_pagina == 60 ? 'selected' : '' }}>60 por página
@@ -45,14 +45,18 @@
                                 </select>
                             </div>
                             <div class="input-field tooltipped" data-position="top" data-tooltip="Ordenação">
-                                <select name="ordem">
-                                    <option value="d_cre" {{ $filtro->ordem == 'd_cre' ? 'selected' : '' }}>Dt. Cadastro ↗
+                                <select name="ordem" class="browser-default">
+                                    <option value="d_asc" {{ $filtro->ordem == 'd_asc' ? 'selected' : '' }}>Dt. Cadastro ↗
                                     </option>
                                     <option value="d_dec" {{ $filtro->ordem == 'd_dec' ? 'selected' : '' }}>Dt. Cadastro ↘
                                     </option>
-                                    <option value="a_cre" {{ $filtro->ordem == 'a_cre' ? 'selected' : '' }}>Nome ↗
+                                    <option value="a_asc" {{ $filtro->ordem == 'a_asc' ? 'selected' : '' }}>Nome ↗
                                     </option>
                                     <option value="a_dec" {{ $filtro->ordem == 'a_dec' ? 'selected' : '' }}>Nome ↘
+                                    </option>
+                                    <option value="l_asc" {{ $filtro->ordem == 'l_asc' ? 'selected' : '' }}>Distância ↗
+                                    </option>
+                                    <option value="l_dec" {{ $filtro->ordem == 'l_dec' ? 'selected' : '' }}>Distância ↘
                                     </option>
                                 </select>
                             </div>

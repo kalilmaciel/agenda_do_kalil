@@ -22,6 +22,7 @@ class ContatosController extends Controller
         ];
 
         $ordem = 'name';
+        $sentido = 'asc';
         switch ($filtro->ordem) {
             case 'a_asc':
                 $ordem = 'name';
@@ -39,6 +40,14 @@ class ContatosController extends Controller
                 $ordem = 'created_at';
                 $sentido = 'desc';
                 break;
+            case 'l_asc':
+                $ordem = 'distancia';
+                $sentido = 'asc';
+                break;
+            case 'l_dec':
+                $ordem = 'distancia';
+                $sentido = 'desc';
+                break;
         }
 
         // DB::enableQueryLog();
@@ -46,16 +55,27 @@ class ContatosController extends Controller
         //O método use(variavel) serve para trazer para dentro da função agregada uma variável de fora
 
         $contatos = Contato::where('usuarios_id', '=', session('user')['id'])
-            ->where('name', 'like', "%{$filtro->busca}%")
-            ->where(function ($query) use ($filtro) {
-                return $query->orWhere('email', 'like', "%{$filtro->busca}%")
-                    ->orWhere('telefone', 'like', "%{$filtro->busca}%")
-                    ->orWhere('celular', 'like', "%{$filtro->busca}%")
-                    ->orWhere('cpf_cnpj', 'like', "%{$filtro->busca}%");
+            ->when(!empty($filtro->busca), function ($query) use ($filtro) {
+                return $query->where('name', 'like', "'%" . $filtro->busca . "%'")
+                    ->orWhere('email', 'like', "'%" . $filtro->busca . "%'")
+                    ->orWhere('telefone', 'like', "'%" . $filtro->busca . "%'")
+                    ->orWhere('celular', 'like', "'%" . $filtro->busca . "%'")
+                    ->orWhere('cpf_cnpj', 'like', "'%" . $filtro->busca . "%'");
             })
-            ->orderBy($ordem, $sentido)
+            ->when(
+                $filtro->ordem == 'l_asc' || $filtro->ordem == 'l_dec',
+                function ($query) use ($ordem, $sentido) {
+                    return $query->orderByRaw("CASE WHEN latitude <> 0.0 AND longitude <> 0.0 THEN 0 ELSE 1 END, $ordem $sentido");
+                },
+                function ($query) use ($ordem, $sentido) {
+                    return $query->orderBy($ordem, $sentido);
+                }
+            )
             ->paginate($filtro->por_pagina)
             ->withQueryString();
+            // ->ddRawSql();
+
+        // dd($contatos);
 
         $breadcrumb = array(
             "Contatos"
@@ -131,13 +151,21 @@ class ContatosController extends Controller
         $contato->latitude = floatval(substr($request->input('latitude'), 0, 11));
         $contato->longitude = floatval(substr($request->input('longitude'), 0, 11));
 
+        //Caso tenha informado as coordenadas, salva a distância até o usuário
+        if ($contato->latitude != 0.0 && $contato->longitude != 0.0) {
+            $user = User::find(session('user')['id']);
+            $contato->distancia = Funcoes::distanciaGPS($user->latitude, $user->longitude, $contato->latitude, $contato->longitude);
+        }
+
         $imagem = Funcoes::uploadImagem($request->file('foto'), 'agenda/contatos');
         if ($imagem) {
             $contato->imagem = $imagem;
         }
 
-        if ($contato->save()) {
-            return redirect()->route('detalhar-contato', ['id' => Funcoes::encrypt($id)])->withInput()->with('success', 'Salvo com sucesso!');
+        $salvo = $contato->save();
+
+        if ($salvo) {
+            return redirect()->route('detalhar-contato', ['id' => Funcoes::encrypt($salvo->id)])->withInput()->with('success', 'Salvo com sucesso!');
         } else {
             return redirect()->route('detalhar-contato')->withInput()->with('error', 'Erro no salvamento.');
         }

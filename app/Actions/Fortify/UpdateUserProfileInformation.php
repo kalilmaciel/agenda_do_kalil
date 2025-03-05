@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Contato;
 use App\Models\User;
 use App\Services\Funcoes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -58,6 +59,20 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'latitude' => floatval(substr($input['latitude'], 0, 11)),
                 'longitude' => floatval(substr($input['longitude'], 0, 11)),
             ])->save();
+
+
+
+            //Caso tenha informado as coordenadas, salva a distância até os contatos
+            if (floatval(substr($input['latitude'], 0, 11)) != 0.0 && floatval(substr($input['longitude'], 0, 11)) != 0.0) {
+                $contatos = Contato::where('usuarios_id', $user->id)->get();
+                foreach ($contatos as $contato) {
+                    if ($contato->latitude == 0.0 || $contato->longitude == 0.0) {
+                        continue;
+                    }
+                    $contato->distancia = Funcoes::distanciaGPS(floatval(substr($input['latitude'], 0, 11)), floatval(substr($input['longitude'], 0, 11)), $contato->latitude, $contato->longitude);
+                    $contato->save();
+                }
+            }
         }
     }
 

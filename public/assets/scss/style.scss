@@ -660,13 +660,10 @@ body {
                 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 
             .select-por-pagina {
-                .select-wrapper {
-                    input.select-dropdown,
-                    .caret {
-                        color: #fff;
-                        fill: #fff;
-                        border-bottom: none !important;
-                    }
+                select {
+                    background-color: transparent;
+                    color: #fff;
+                    border: none;
                 }
 
                 .switch {
