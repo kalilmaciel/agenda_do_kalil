@@ -9,7 +9,7 @@
     <div style="width: 100%; background-color: #FFF; margin: 0; padding: 0; font-family: 'Roboto', sans-serif">
         <div
             style="width: 80%; max-width: 800px; margin: 20px auto; background-color: #fff; border: solid 1px #ff914d; border-radius: 10px; padding: 20px; height:90%">
-            <img src="asset('assets/img/login-logo.png'" alt="gaso"
+            <img src="{{ asset('assets/img/login-logo.png') }}" alt="F.R.I.E.N.D.S"
                 style="display: block; margin: 20px auto; width: 50%; max-width: 200px" />
             <h1 style="text-align: center; font-size: 16px">
                 Olá, {{ $user->name }}!
