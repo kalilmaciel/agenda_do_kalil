@@ -146,13 +146,12 @@ function enderecoCompleto() {
         $("#endereco").val() +
         ", " +
         $("#bairro").val() +
-        ", " +
+        ", <br>" +
         $("#cidade").val() +
         ", " +
         $("#uf").val() +
-        ", " +
-        $("#cep").val() +
-        ", Brasil"
+        ", Brasil. <br> <strong>CEP</strong> " +
+        $("#cep").val()
     );
 }
 

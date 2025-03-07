@@ -3,9 +3,9 @@
 @extends('estrutura_interna')
 
 @section('js_extra')
-<script src="{{ asset('assets/js/controllers/MapaController.js') }}"></script>
-<script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
-<script src="{{ asset('assets/js/controllers/MeuCadastroController.js') }}"></script>
+    <script src="{{ asset('assets/js/controllers/MapaController.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/leaflet/dist/leaflet.js') }}"></script>
+    <script src="{{ asset('assets/js/controllers/MeuCadastroController.js') }}"></script>
 @endsection
 
 @section('css_extra')
@@ -156,14 +156,14 @@
         <div class="row no-margin-bottom container">
             <div class="col s12">
                 <ul class="collapsible" id="collapsible_mapa">
-                    <li
-                        class="{{ $user['latitude'] != 0.0 && $user['longitude'] != 0.0 ? 'active' : '' }}">
+                    <li class="{{ $user['latitude'] != 0.0 && $user['longitude'] != 0.0 ? 'active' : '' }}">
                         <div class="collapsible-header">
                             <i class="fad default-icon-theme fa-solid fa-map left"></i>
                             Localização no mapa
                             <a href="#!" onclick="getLocalizacao()"
                                 class="secondary-content btn-small blue redondo">
-                                Obter localização
+                                <i class="fa fa-location-pin left"></i>
+                                <span class="hide-on-med-and-down">Obter localização</span>
                             </a>
                         </div>
                         <div class="collapsible-body">
@@ -248,7 +248,8 @@
                         </div>
                         <div class="collapsible-body">
                             <div class="row no-margin-bottom destaques">
-                                <form method="POST" action="{{ route('destruir-conta') }}" onsubmit="return confirm('Tem certeza que deseja excluir sua conta?');">
+                                <form method="POST" action="{{ route('destruir-conta') }}"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir sua conta?');">
                                     @csrf
                                     <div class="row no-margin-bottom">
                                         <div class="col m5 s12 input-field no-margin-bottom">

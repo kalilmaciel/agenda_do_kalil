@@ -147,7 +147,8 @@
                                         Localização no mapa
                                         <a href="#!" onclick="getLocalizacao()"
                                             class="secondary-content btn-small blue redondo">
-                                            Obter localização
+                                            <i class="fa fa-location-pin left"></i>
+                                            <span class="hide-on-med-and-down">Obter localização</span>
                                         </a>
                                     </div>
                                     <div class="collapsible-body">
