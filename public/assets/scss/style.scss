@@ -363,6 +363,8 @@ body {
 .botoes-inicial {
     text-align: left;
     width: -webkit-fill-available;
+    width: -moz-available;
+    width: fill-available;
     display: inline-block;
     border-radius: 20px;
     margin: 10px;
