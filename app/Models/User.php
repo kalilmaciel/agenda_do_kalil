@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Mail\ResetPasswordMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -76,5 +79,13 @@ class User extends Authenticatable
     public function telefones()
     {
         return $this->hasMany(Telefone::class);
+    }
+
+    //Define a cara do e-mail que será enviado para o usuário ao solicitar a redefinição de senha
+    public function sendPasswordResetNotification($token)
+    {
+        $resetUrl = url(env('APP_URL') . route('password.reset', ['token' => $token, 'email' => $this->email], false));
+
+        Mail::to($this->email)->send(new ResetPasswordMail($this, $resetUrl));
     }
 }
