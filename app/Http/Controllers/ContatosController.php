@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Rules\ValidatorCpfCnpj;
 use App\Services\Funcoes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ContatosController extends Controller
@@ -54,13 +55,17 @@ class ContatosController extends Controller
 
         //O método use(variavel) serve para trazer para dentro da função agregada uma variável de fora
 
-        $contatos = Contato::where('usuarios_id', '=', session('user')['id'])
+        $contatos = Contato::where('usuarios_id', Auth::user()->id)
             ->when(!empty($filtro->busca), function ($query) use ($filtro) {
-                return $query->where('name', 'like', "'%" . $filtro->busca . "%'")
-                    ->orWhere('email', 'like', "'%" . $filtro->busca . "%'")
-                    ->orWhere('telefone', 'like', "'%" . $filtro->busca . "%'")
-                    ->orWhere('celular', 'like', "'%" . $filtro->busca . "%'")
-                    ->orWhere('cpf_cnpj', 'like', "'%" . $filtro->busca . "%'");
+                return $query->where(function ($q) use ($filtro) {
+                    //Agrupamento de where
+                    return $q
+                        ->where('name', 'like', "'%" . $filtro->busca . "%'")
+                        ->orWhere('email', 'like', "'%" . $filtro->busca . "%'")
+                        ->orWhere('telefone', 'like', "'%" . $filtro->busca . "%'")
+                        ->orWhere('celular', 'like', "'%" . $filtro->busca . "%'")
+                        ->orWhere('cpf_cnpj', 'like', "'%" . $filtro->busca . "%'");
+                });
             })
             ->when(
                 $filtro->ordem == 'l_asc' || $filtro->ordem == 'l_dec',
@@ -73,7 +78,7 @@ class ContatosController extends Controller
             )
             ->paginate($filtro->por_pagina)
             ->withQueryString();
-            // ->ddRawSql();
+        // ->ddRawSql();
 
         // dd($contatos);
 
@@ -81,7 +86,7 @@ class ContatosController extends Controller
             "Contatos"
         );
 
-        $user = User::find(session('user')['id'])->toArray();
+        $user = User::find(Auth::user()->id)->toArray();
 
         return view('paginas.contatos', compact(['contatos', 'filtro', 'breadcrumb', 'user']));
     }
@@ -136,7 +141,7 @@ class ContatosController extends Controller
             }
             $contato->id = $id;
         }
-        $contato->usuarios_id = session('user')['id'];
+        $contato->usuarios_id = Auth::user()->id;
         $contato->name = $request->input('name');
         $contato->email = $request->input('email');
         $contato->celular = Funcoes::onlyNumbers($request->input('celular'));
@@ -152,9 +157,9 @@ class ContatosController extends Controller
         $contato->longitude = floatval(substr($request->input('longitude'), 0, 11));
 
         //Caso tenha informado as coordenadas, salva a distância até o usuário
-        if ($contato->latitude != 0.0 && $contato->longitude != 0.0) {
-            $user = User::find(session('user')['id']);
-            $contato->distancia = Funcoes::distanciaGPS($user->latitude, $user->longitude, $contato->latitude, $contato->longitude);
+        $user = User::find(Auth::user()->id);
+        if ($contato->latitude != 0.0 && $contato->longitude != 0.0 && floatval($user->latitude) != 0.0 && floatval($user->longitude) != 0.0) {
+            $contato->distancia = Funcoes::distanciaGPS(floatval($user->latitude), floatval($user->longitude), $contato->latitude, $contato->longitude);
         }
 
         $imagem = Funcoes::uploadImagem($request->file('foto'), 'agenda/contatos');

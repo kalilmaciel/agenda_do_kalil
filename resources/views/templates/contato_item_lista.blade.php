@@ -23,7 +23,7 @@
                        Chamar contato
                    </a>
                </li>
-               @if ($contato['distancia'] > 0.0)
+               @if ($contato['latitude'] && $contato['longitude'])
                    <li>
                        <a href="#!"
                            onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')">

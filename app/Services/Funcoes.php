@@ -594,12 +594,16 @@ class Funcoes
      */
     public static function distanciaGPS(float $lat1, float $lon1, float $lat2, float $lon2): float
     {
-        $lat1 = deg2rad($lat1);
-        $lat2 = deg2rad($lat2);
-        $lon1 = deg2rad($lon1);
-        $lon2 = deg2rad($lon2);
-        $distancia = (6371 * acos(cos($lat1) * cos($lat2) * cos($lon2 - $lon1) + sin($lat1) * sin($lat2)));
-        $distancia = number_format($distancia, 2, ".", "");
-        return floatval($distancia);
+        if ($lat1 && $lon1 && $lat2 && $lon2) {
+            $lat1 = deg2rad($lat1);
+            $lat2 = deg2rad($lat2);
+            $lon1 = deg2rad($lon1);
+            $lon2 = deg2rad($lon2);
+
+            $distancia = (6371 * acos(cos($lat1) * cos($lat2) * cos($lon2 - $lon1) + sin($lat1) * sin($lat2)));
+            $distancia = number_format($distancia, 2, ".", "");
+            return floatval($distancia);
+        }
+        return FALSE;
     }
 }

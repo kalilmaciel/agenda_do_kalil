@@ -46,6 +46,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 }
             }
 
+            $latitude = floatval(substr($input['latitude'], 0, 11));
+            $longitude = floatval(substr($input['longitude'], 0, 11));
+
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
@@ -56,20 +59,20 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'bairro' => $input['bairro'],
                 'cidade' => $input['cidade'],
                 'uf' => $input['uf'],
-                'latitude' => floatval(substr($input['latitude'], 0, 11)),
-                'longitude' => floatval(substr($input['longitude'], 0, 11)),
+                'latitude' => $latitude,
+                'longitude' => $longitude,
             ])->save();
 
 
 
             //Caso tenha informado as coordenadas, salva a distância até os contatos
-            if (floatval(substr($input['latitude'], 0, 11)) != 0.0 && floatval(substr($input['longitude'], 0, 11)) != 0.0) {
+            if ($latitude != 0.0 && $longitude != 0.0) {
                 $contatos = Contato::where('usuarios_id', $user->id)->get();
                 foreach ($contatos as $contato) {
-                    if ($contato->latitude == 0.0 || $contato->longitude == 0.0) {
+                    if (floatval($contato->latitude) == 0.0 || floatval($contato->longitude == 0.0)) {
                         continue;
                     }
-                    $contato->distancia = Funcoes::distanciaGPS(floatval(substr($input['latitude'], 0, 11)), floatval(substr($input['longitude'], 0, 11)), $contato->latitude, $contato->longitude);
+                    $contato->distancia = Funcoes::distanciaGPS($latitude, $longitude, $contato->latitude, $contato->longitude);
                     $contato->save();
                 }
             }
