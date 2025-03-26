@@ -12,6 +12,11 @@ use Illuminate\View\View;
 
 class ContatosController extends Controller
 {
+    public function listarContatos(Request $request): View
+    {
+        return view('paginas.contatos');
+    }
+
     public function listar(Request $request): View
     {
 

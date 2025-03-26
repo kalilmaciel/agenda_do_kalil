@@ -23,7 +23,7 @@
                        Chamar contato
                    </a>
                </li>
-               @if ($contato['latitude'] && $contato['longitude'])
+               @if (floatval($contato['latitude']) != 0.0 && floatval($contato['longitude']) != 0.0)
                    <li>
                        <a href="#!"
                            onclick="centralizar('{{ $contato['latitude'] }}', '{{ $contato['longitude'] }}', '{{ $contato['name'] }}')">
@@ -47,7 +47,7 @@
                    </span>
                </div>
 
-               @if ($contato['distancia'] != 0.0)
+               @if (floatval($contato['distancia']) != 0.0)
                    <div class="col m3 s12 no-padding-left tooltipped" data-position="top"
                        data-tooltip="Distância de você">
                        <a href="#!"

@@ -19,8 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/meu-cadastro', [UserController::class, 'meu_cadastro'])->name('meu-cadastro');
     Route::post('/destruir-conta', [UserController::class, 'destruir_conta'])->name('destruir-conta');
 
-    Route::get('/contatos', [ContatosController::class, 'listar'])->name('contatos');
-    Route::post('/contatos', [ContatosController::class, 'listar'])->name('contatos');
+    // Route::get('/contatos', [ContatosController::class, 'listar'])->name('contatos');
+    // Route::post('/contatos', [ContatosController::class, 'listar'])->name('contatos');
+    Route::get('/contatos', [ContatosController::class, 'listarContatos'])->name('contatos');
     Route::get('/contato/{id}', [ContatosController::class, 'detalhar'])->name('detalhar-contato');
     Route::post('/contato', [ContatosController::class, 'salvar'])->name('salvar-contato');
 
