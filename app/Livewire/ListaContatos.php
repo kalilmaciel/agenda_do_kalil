@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Contato;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -18,10 +19,14 @@ class ListaContatos extends Component
     public $busca = '';
     public $exibir_mapa = '-1';
 
-    public function submit()
+    #[On('listar-contatos')]
+    public function eventoListar($filtro)
     {
-        //Reinicia o contador da página para 1
         $this->resetPage();
+        $this->por_pagina = $filtro['por_pagina'];
+        $this->ordem = $filtro['ordem'];
+        $this->busca = $filtro['busca'];
+        $this->exibir_mapa = $filtro['exibir_mapa'];
     }
 
     public function listar()
@@ -56,7 +61,7 @@ class ListaContatos extends Component
         }
 
         //Chama um método javascript após executada a ação
-        $this->js("setTimeout(() => {carregando(); ativarComponentes();}, 500)");
+        $this->js("setTimeout(() => {ativarComponentes();}, 500)");
 
         return Contato::where('usuarios_id', Auth::user()->id)
             ->when(!empty($this->busca), function ($query) {
@@ -81,15 +86,6 @@ class ListaContatos extends Component
             )
             // ->ddRawSql();
             ->paginate($this->por_pagina);
-    }
-
-    public function limparBusca()
-    {
-        $this->resetPage();
-        $this->por_pagina = 20;
-        $this->ordem = 'a_asc';
-        $this->busca = '';
-        $this->exibir_mapa = '-1';
     }
 
     public function render()

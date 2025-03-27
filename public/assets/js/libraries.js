@@ -672,5 +672,5 @@ function abrirLigacao(numero){
 }
 
 function abrirEmail(nome, email){
-    window.open(`mailto:${email}?subject=Olá ${email}&body=E aí, como vai?`);
+    window.open(`mailto:${email}?subject=Olá ${nome}&body=E aí, como vai?`);
 }

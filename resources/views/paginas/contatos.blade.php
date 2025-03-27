@@ -1,4 +1,3 @@
-
 @extends('estrutura_interna')
 
 @section('js_extra')
@@ -12,7 +11,8 @@
 @endsection
 
 @section('content')
-
-    @livewire('lista-contatos')
-
+    <main>
+        @livewire('filtro-contatos')
+        @livewire('lista-contatos')
+    </main>
 @endsection

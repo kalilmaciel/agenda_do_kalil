@@ -1170,3 +1170,50 @@ body {
         opacity: 0;
     }
 }
+
+.filtros {
+    border-radius: 10px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    .titulo {
+        background-color: $primaria;
+        color: $background;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+        box-shadow: none;
+        span {
+            padding: 20px;
+            font-weight: bolder;
+        }
+        .selects {
+            padding-right: 15px;
+            .input-field {
+                height: 100%;
+                display: inline-flex;
+                margin: 0 5px;
+                justify-content: center;
+                flex-direction: column;
+                select {
+                    height: 40px;
+                    background-color: transparent;
+                    color: $background;
+                    border: none;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+    .conteudo {
+        padding: 20px;
+    }
+    .rodape {
+        background-color: #fff;
+        padding: 10px 20px;
+        border-radius: 0 0 10px 10px;
+    }
+}
