@@ -1,3 +1,5 @@
+@inject('funcoes', 'App\Services\Funcoes')
+
 <ul id="slide-out" class="sidenav sidenav-collapsible collapsible">
     <li>
         <div class="user-view">
